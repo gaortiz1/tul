@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: shopping-cart-service
+logging:
+  level:
+    ROOT: DEBUG
+server:
+  servlet:
+    context-path: /api
