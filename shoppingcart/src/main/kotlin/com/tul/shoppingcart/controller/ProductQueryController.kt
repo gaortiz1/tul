@@ -1,8 +1,8 @@
 package com.tul.shoppingcart.controller
 
 import com.github.lkqm.spring.api.version.ApiVersion
-import com.tul.shoppingcart.service.dto.ProductDTO
-import com.tul.shoppingcart.service.query.ProductQueryHandler
+import com.tul.shoppingcart.application.dto.ProductDTO
+import com.tul.shoppingcart.application.query.ProductQueryHandler
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.springframework.web.bind.annotation.GetMapping

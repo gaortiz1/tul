@@ -47,6 +47,8 @@ data class Product(
     private fun makeDiscount() {
         this.typeProduct = DISCOUNT
     }
+
+    fun isSimple(): Boolean = this.typeProduct == SIMPLE
 }
 
 enum class TypeProduct {

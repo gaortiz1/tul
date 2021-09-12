@@ -1,18 +1,28 @@
 package com.tul.shoppingcart.domain.entity
 
-import java.math.BigDecimal
+import com.tul.shoppingcart.domain.component.Discounter
+import com.tul.shoppingcart.domain.component.withoutDiscount
+import com.tul.shoppingcart.domain.entity.valueObject.Money
+import java.math.BigInteger
 import java.util.*
 
 data class Item(
         override val id: UUID = UUID.randomUUID(),
         val product: Product,
-        var quantity: Int = 1
+        var quantity: BigInteger = BigInteger.ONE
 ) : EntityId {
 
-    fun total(): BigDecimal = BigDecimal.TEN
+    @Transient
+    var discounter = withoutDiscount
 
-    fun changeQuantity(quantity: Int) {
-        this.quantity = quantity
+    fun price(): Money = discounter.applyDiscount(this).multiply(quantity.toBigDecimal())
+
+    fun changeQuantity(quantity: Long) {
+        this.quantity = BigInteger.valueOf(quantity)
+    }
+
+    fun applyDiscount(discounter: Discounter) {
+        this.discounter = discounter
     }
 }
 
@@ -20,10 +30,18 @@ object ItemFactory {
 
     fun createItem(
             product: Product,
-            quantity: Int = 1,
+            quantity: BigInteger = BigInteger.ONE,
     ) = Item(
             product = product,
             quantity = quantity
+    )
+
+    fun createItem(
+            product: Product,
+            quantity: Long = 1,
+    ) = createItem(
+            product = product,
+            quantity = BigInteger.valueOf(quantity)
     )
 
 }

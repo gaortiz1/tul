@@ -1,14 +1,14 @@
 package com.tul.shoppingcart.controller
 
 import com.github.lkqm.spring.api.version.ApiVersion
-import com.tul.shoppingcart.service.command.DeleteCommand
-import com.tul.shoppingcart.service.command.EditItemCommand
-import com.tul.shoppingcart.service.command.EditItemCommandWithIdCommand
-import com.tul.shoppingcart.service.command.NewItemCommand
-import com.tul.shoppingcart.service.command.handler.AddItemHandler
-import com.tul.shoppingcart.service.command.handler.DeleteItemHandler
-import com.tul.shoppingcart.service.command.handler.EditItemHandler
-import com.tul.shoppingcart.service.dto.ItemDTO
+import com.tul.shoppingcart.application.command.DeleteCommand
+import com.tul.shoppingcart.application.command.EditItemCommand
+import com.tul.shoppingcart.application.command.EditItemCommandWithIdCommand
+import com.tul.shoppingcart.application.command.NewItemCommand
+import com.tul.shoppingcart.application.command.handler.AddItemHandler
+import com.tul.shoppingcart.application.command.handler.DeleteItemHandler
+import com.tul.shoppingcart.application.command.handler.EditItemHandler
+import com.tul.shoppingcart.application.dto.ItemDTO
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiParam

@@ -8,6 +8,22 @@ data class Money(
         var currencyCode: String
 ) {
     fun getValue() = "$denomination $currencyCode"
+
+    private fun multiply(multiplier: Money): Money =
+            MoneyFactory.createDenomination(
+                    denomination.multiply(multiplier.denomination)
+            )
+
+    fun multiply(multiplier: BigDecimal): Money =
+            multiply(MoneyFactory.createDenomination(multiplier))
+
+    private fun divide(divisor: Money) : Money =
+            MoneyFactory.createDenomination(
+                    denomination.divide(divisor.denomination)
+            )
+
+    fun divide(divisor: BigDecimal) : Money =
+            divide(MoneyFactory.createDenomination(divisor))
 }
 
 private val DEFAULT_CURRENCY = Currency.getInstance("USD")
