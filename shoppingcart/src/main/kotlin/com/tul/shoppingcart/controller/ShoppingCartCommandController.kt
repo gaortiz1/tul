@@ -35,12 +35,7 @@ class ShoppingCartCommandController(
             @PathVariable("id")
             id: UUID,
     ): ResponseEntity<ItemDTO> = ok(
-            addItemHandler.execute(
-                    NewItemCommandWithShoppingCartId(
-                            shoppingCartId = id,
-                            newItemCommand = newItemCommand
-                    )
-            )
+            addItemHandler.execute(newItemCommand.withId(id))
     )
 
     @PutMapping("/{id}/items/{itemId}")
@@ -55,11 +50,11 @@ class ShoppingCartCommandController(
             @RequestBody
             editItemCommand: EditItemCommand,
     ): ResponseEntity<ItemDTO> =
-            ok(editItemHandler.execute(EditItemCommandWithIdCommand(id = itemId, editItemCommand = editItemCommand)))
+            ok(editItemHandler.execute(editItemCommand.withId(itemId)))
 
 
     @DeleteMapping("/{id}/items/{itemId}")
-    fun deleteItem(@PathVariable("id") id: UUID,  @PathVariable("itemId") itemId: UUID,) {
+    fun deleteItem(@PathVariable("id") id: UUID,  @PathVariable("itemId") itemId: UUID) {
         deleteItemHandler.execute(DeleteCommand(itemId))
     }
 }

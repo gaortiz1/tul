@@ -3,7 +3,6 @@ package com.tul.shoppingcart.controller
 import com.github.lkqm.spring.api.version.ApiVersion
 import com.tul.shoppingcart.application.command.DeleteCommand
 import com.tul.shoppingcart.application.command.EditProductCommand
-import com.tul.shoppingcart.application.command.EditProductWithIdCommand
 import com.tul.shoppingcart.application.command.NewProductCommand
 import com.tul.shoppingcart.application.command.handler.AddProductHandler
 import com.tul.shoppingcart.application.command.handler.DeleteProductHandler
@@ -37,18 +36,18 @@ class ProductCommandController(
             newProductCommand: NewProductCommand
     ): ResponseEntity<ProductDTO> = ok(addProductService.execute(newProductCommand))
 
-    @PutMapping("/{id}")
+    @PutMapping("{id}")
     fun editProduct(
             @ApiParam(name = "edit Product", value = "Model")
             @Valid
             @RequestBody
             editProductCommand: EditProductCommand,
-            @PathVariable
+            @PathVariable("id")
             id: UUID,
     ): ResponseEntity<ProductDTO> =
-            ok(editProductService.execute(EditProductWithIdCommand(id = id, editProductCommand = editProductCommand)))
+            ok(editProductService.execute(editProductCommand.withId(id)))
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     fun deleteProduct(@PathVariable id: UUID) {
         deleteProductHandler.execute(DeleteCommand(id))
     }

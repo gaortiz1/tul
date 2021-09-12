@@ -1,6 +1,6 @@
 package com.tul.shoppingcart.application.command.handler.impl
 
-import com.tul.shoppingcart.application.command.NewItemCommandWithShoppingCartId
+import com.tul.shoppingcart.application.command.NewItemCommand
 import com.tul.shoppingcart.data.shoesProductDiscount
 import com.tul.shoppingcart.domain.entity.ItemFactory
 import com.tul.shoppingcart.domain.entity.ShoppingCartFactory
@@ -52,7 +52,7 @@ internal class AddItemHandlerImplTest {
     fun `should create a new item`() {
         val productId = UUID.randomUUID()
         val shoppingCartId = UUID.randomUUID()
-        val newItemCommand = NewItemCommandWithShoppingCartId(
+        val newItemCommand = NewItemCommand(
                 productId = productId,
                 shoppingCartId = shoppingCartId,
                 quantity = 10
@@ -87,7 +87,7 @@ internal class AddItemHandlerImplTest {
     fun `should not create a new item when a product does not exits`() {
         val productId = UUID.randomUUID()
         val shoppingCartId = UUID.randomUUID()
-        val newItemCommand = NewItemCommandWithShoppingCartId(
+        val newItemCommand = NewItemCommand(
                 productId = productId,
                 shoppingCartId = shoppingCartId,
                 quantity = 10
@@ -109,7 +109,7 @@ internal class AddItemHandlerImplTest {
     fun `should not create a new item when a shopping cart does not exits`() {
         val productId = UUID.randomUUID()
         val shoppingCartId = UUID.randomUUID()
-        val newItemCommand = NewItemCommandWithShoppingCartId(
+        val newItemCommand = NewItemCommand(
                 productId = productId,
                 shoppingCartId = shoppingCartId,
                 quantity = 10
@@ -135,7 +135,7 @@ internal class AddItemHandlerImplTest {
     fun `should not create a new item when item already save`() {
         val productId = UUID.randomUUID()
         val shoppingCartId = UUID.randomUUID()
-        val newItemCommand = NewItemCommandWithShoppingCartId(
+        val newItemCommand = NewItemCommand(
                 productId = productId,
                 shoppingCartId = shoppingCartId,
                 quantity = 10

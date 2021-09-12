@@ -1,7 +1,6 @@
 package com.tul.shoppingcart.application.command.handler.impl
 
 import com.tul.shoppingcart.application.command.NewItemCommand
-import com.tul.shoppingcart.application.command.NewItemCommandWithShoppingCartId
 import com.tul.shoppingcart.application.command.handler.AddItemHandler
 import com.tul.shoppingcart.application.dto.ItemDTO
 import com.tul.shoppingcart.application.dto.mapper.toDto
@@ -27,13 +26,13 @@ class AddItemHandlerImpl(
         private val LOGGER: Logger = LoggerFactory.getLogger(AddItemHandlerImpl::class.java)
     }
 
-    override fun execute(@Valid newItem: NewItemCommandWithShoppingCartId): ItemDTO? {
+    override fun execute(@Valid newItem: NewItemCommand): ItemDTO? {
         LOGGER.debug("adding item {}", newItem)
 
         val product = productRepository.findById(newItem.productId)
                 ?: throw ObjectNotFoundException(code = "item_not_found", message = "Item not found with ${newItem.productId}")
 
-        val shoppingCart = shoppingCartRepository.findById(newItem.shoppingCartId)
+        val shoppingCart = shoppingCartRepository.findById(newItem.shoppingCartId!!)
                 ?: throw ObjectNotFoundException(code = "shopping_cart_not_found", message = "Shopping cart not found with ${newItem.shoppingCartId}")
 
         if (itemRepository.existsItemByProductId(newItem.productId)) {

@@ -1,11 +1,11 @@
 package com.tul.shoppingcart.application.command.handler.impl
 
+import com.tul.shoppingcart.application.command.EditItemCommand
+import com.tul.shoppingcart.data.shoesProductDiscount
 import com.tul.shoppingcart.domain.entity.ItemFactory
+import com.tul.shoppingcart.domain.entity.ShoppingCartFactory
 import com.tul.shoppingcart.domain.exception.ObjectNotFoundException
 import com.tul.shoppingcart.infrastructure.ItemRepository
-import com.tul.shoppingcart.application.command.EditItemCommandWithIdCommand
-import com.tul.shoppingcart.data.shoesProductDiscount
-import com.tul.shoppingcart.domain.entity.ShoppingCartFactory
 import io.mockk.MockKAnnotations
 import io.mockk.clearMocks
 import io.mockk.every
@@ -40,7 +40,7 @@ internal class EditItemHandlerImplTest {
     @Test
     fun `should update a item when it exits in the DB`() {
         val itemId = UUID.randomUUID()
-        val editProductCommand = EditItemCommandWithIdCommand(
+        val editProductCommand = EditItemCommand(
                 id = itemId,
                 quantity = 10
         )
@@ -71,7 +71,7 @@ internal class EditItemHandlerImplTest {
     @Test
     fun `should not update a item when it does not exits`() {
         val itemId = UUID.randomUUID()
-        val editProductCommand = EditItemCommandWithIdCommand(
+        val editProductCommand = EditItemCommand(
                 id = itemId,
                 quantity = 10
         )

@@ -1,8 +1,8 @@
 package com.tul.shoppingcart.application.command.handler.impl
 
+import com.tul.shoppingcart.application.command.EditProductCommand
 import com.tul.shoppingcart.domain.exception.ObjectNotFoundException
 import com.tul.shoppingcart.infrastructure.ProductRepository
-import com.tul.shoppingcart.application.command.EditProductWithIdCommand
 import com.tul.shoppingcart.application.command.handler.EditProductHandler
 import com.tul.shoppingcart.application.dto.ProductDTO
 import com.tul.shoppingcart.application.dto.mapper.toDto
@@ -20,10 +20,10 @@ class EditProductHandlerImpl(
         val LOGGER: Logger = LoggerFactory.getLogger(EditProductHandlerImpl::class.java)
     }
 
-    override fun execute(@Valid editProductCommand: EditProductWithIdCommand): ProductDTO {
+    override fun execute(@Valid editProductCommand: EditProductCommand): ProductDTO {
         LOGGER.debug("editing product {}", editProductCommand)
 
-        val currentProduct = productRepository.findById(editProductCommand.id)
+        val currentProduct = productRepository.findById(editProductCommand.id!!)
                 ?: throw ObjectNotFoundException(code = "product_not_found", message = "Product not found with ${editProductCommand.id}")
 
         editProductCommand.name?.run {

@@ -1,5 +1,6 @@
 package com.tul.shoppingcart.application.command
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.tul.shoppingcart.application.command.handler.Command
 import com.tul.shoppingcart.domain.entity.TypeProduct
 import io.swagger.annotations.ApiModel
@@ -13,6 +14,9 @@ import javax.validation.constraints.Size
 
 @ApiModel(value = "EditProduct")
 data class EditProductCommand(
+        @JsonIgnore
+        var id: UUID?,
+
         @field:Size(min = 5, max = 30, message = "name has a size between 5 and 30")
         val name: String? = null,
 
@@ -28,34 +32,9 @@ data class EditProductCommand(
         val sku: Map<@NotBlank String, @NotBlank String>?,
 
         val typeProduct: TypeProduct? = null,
-) : Command
-
-data class EditProductWithIdCommand(
-        val id: UUID,
-        private val editProductCommand: EditProductCommand,
 ) : Command {
-
-    constructor(
-            id: UUID,
-            name: String? = null,
-            description: String? = null,
-            price: BigDecimal?,
-            sku: Map<String, String>?,
-            typeProduct: TypeProduct? = null,
-    ) : this(
-            id = id,
-            editProductCommand = EditProductCommand(
-                    name = name,
-                    description = description,
-                    price = price,
-                    sku = sku,
-                    typeProduct = typeProduct
-            )
-    )
-
-    val name: String? by editProductCommand::name
-    val description: String? by editProductCommand::description
-    val price: BigDecimal? by editProductCommand::price
-    val sku: Map<String, String>? by editProductCommand::sku
-    val typeProduct: TypeProduct? by editProductCommand::typeProduct
+    fun withId(id: UUID): EditProductCommand {
+        this.id = id
+        return this
+    }
 }

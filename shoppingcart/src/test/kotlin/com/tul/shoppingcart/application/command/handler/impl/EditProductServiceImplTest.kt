@@ -1,10 +1,10 @@
 package com.tul.shoppingcart.application.command.handler.impl
 
+import com.tul.shoppingcart.application.command.EditProductCommand
+import com.tul.shoppingcart.data.shoesProductDiscount
 import com.tul.shoppingcart.domain.entity.TypeProduct.SIMPLE
 import com.tul.shoppingcart.domain.exception.ObjectNotFoundException
 import com.tul.shoppingcart.infrastructure.ProductRepository
-import com.tul.shoppingcart.application.command.EditProductWithIdCommand
-import com.tul.shoppingcart.data.shoesProductDiscount
 import io.mockk.MockKAnnotations
 import io.mockk.clearMocks
 import io.mockk.every
@@ -39,7 +39,7 @@ internal class EditProductServiceImplTest {
     @Test
     fun `should edit a product when it exist in the DB`() {
         val id = UUID.randomUUID()
-        val editProductWithIdCommand = EditProductWithIdCommand(
+        val editProductWithIdCommand = EditProductCommand(
                 id,
                 "new shoes",
                 "new description of shoes",
@@ -74,7 +74,7 @@ internal class EditProductServiceImplTest {
     @Test
     fun `should not edit a product when it doest not exist in the DB`() {
         val id = UUID.randomUUID()
-        val editProductWithIdCommand = EditProductWithIdCommand(
+        val editProductWithIdCommand = EditProductCommand(
                 id,
                 "new shoes",
                 "new description of shoes",

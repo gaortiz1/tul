@@ -1,9 +1,9 @@
 package com.tul.shoppingcart.application.command.handler.impl
 
-import com.tul.shoppingcart.domain.entity.TypeProduct.SIMPLE
-import com.tul.shoppingcart.infrastructure.ProductRepository
 import com.tul.shoppingcart.application.command.NewProductCommand
 import com.tul.shoppingcart.data.shoesProductSimple
+import com.tul.shoppingcart.domain.entity.TypeProduct.SIMPLE
+import com.tul.shoppingcart.infrastructure.ProductRepository
 import io.mockk.MockKAnnotations
 import io.mockk.clearMocks
 import io.mockk.every
