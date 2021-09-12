@@ -9,6 +9,7 @@ import com.tul.shoppingcart.service.dto.mapper.toDto
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import javax.validation.Valid
 
 @Service
 class EditProductHandlerImpl(
@@ -19,29 +20,29 @@ class EditProductHandlerImpl(
         val LOGGER: Logger = LoggerFactory.getLogger(EditProductHandlerImpl::class.java)
     }
 
-    override fun execute(command: EditProductWithIdCommand): ProductDTO {
-        LOGGER.debug("editing product {}", command)
+    override fun execute(@Valid editProductCommand: EditProductWithIdCommand): ProductDTO {
+        LOGGER.debug("editing product {}", editProductCommand)
 
-        val currentProduct = productRepository.findById(command.id)
-                ?: throw ObjectNotFoundException(code = "product_not_found", message = "Product not found with ${command.id}")
+        val currentProduct = productRepository.findById(editProductCommand.id)
+                ?: throw ObjectNotFoundException(code = "product_not_found", message = "Product not found with ${editProductCommand.id}")
 
-        command.name?.run {
+        editProductCommand.name?.run {
             currentProduct.changeName(this)
         }
 
-        command.description?.run {
+        editProductCommand.description?.run {
             currentProduct.changeDescription(this)
         }
 
-        command.price?.run {
+        editProductCommand.price?.run {
             currentProduct.changePrice(this)
         }
 
-        command.sku?.run {
+        editProductCommand.sku?.run {
             currentProduct.changeSku(this)
         }
 
-        command.type?.run {
+        editProductCommand.typeProduct?.run {
             currentProduct.changeType(this)
         }
 

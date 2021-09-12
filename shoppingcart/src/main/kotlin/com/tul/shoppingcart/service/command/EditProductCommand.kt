@@ -1,6 +1,6 @@
 package com.tul.shoppingcart.service.command
 
-import com.tul.shoppingcart.domain.entity.Type
+import com.tul.shoppingcart.domain.entity.TypeProduct
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 import java.math.BigDecimal
@@ -26,7 +26,7 @@ data class EditProductCommand(
         @ApiModelProperty(value = "sku of the product", name = "sku")
         val sku: Map<@NotBlank String, @NotBlank String>?,
 
-        val type: Type? = null,
+        val typeProduct: TypeProduct? = null,
 ) : Command
 
 data class EditProductWithIdCommand(
@@ -40,7 +40,7 @@ data class EditProductWithIdCommand(
             description: String? = null,
             price: BigDecimal?,
             sku: Map<String, String>?,
-            type: Type? = null,
+            typeProduct: TypeProduct? = null,
     ) : this(
             id = id,
             editProductCommand = EditProductCommand(
@@ -48,7 +48,7 @@ data class EditProductWithIdCommand(
                     description = description,
                     price = price,
                     sku = sku,
-                    type = type
+                    typeProduct = typeProduct
             )
     )
 
@@ -56,5 +56,5 @@ data class EditProductWithIdCommand(
     val description: String? by editProductCommand::description
     val price: BigDecimal? by editProductCommand::price
     val sku: Map<String, String>? by editProductCommand::sku
-    val type: Type? by editProductCommand::type
+    val typeProduct: TypeProduct? by editProductCommand::typeProduct
 }

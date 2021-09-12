@@ -1,7 +1,7 @@
 package com.tul.shoppingcart.controller
 
 import com.github.lkqm.spring.api.version.ApiVersion
-import com.tul.shoppingcart.service.command.DeleteProductCommand
+import com.tul.shoppingcart.service.command.DeleteCommand
 import com.tul.shoppingcart.service.command.EditProductCommand
 import com.tul.shoppingcart.service.command.EditProductWithIdCommand
 import com.tul.shoppingcart.service.command.NewProductCommand
@@ -19,7 +19,7 @@ import java.util.*
 import javax.validation.Valid
 
 @RestController
-@Api(value = "product", description = "Endpoint for product Endpoint for product management", tags = ["product"])
+@Api(value = "product", description = "Endpoint for product management", tags = ["product"])
 @RequestMapping("products", produces = ["application/json"], consumes = ["application/json"])
 @ApiVersion("1")
 class ProductCommandController(
@@ -50,6 +50,6 @@ class ProductCommandController(
 
     @DeleteMapping("/{id}")
     fun deleteProduct(@PathVariable id: UUID) {
-        deleteProductHandler.execute(DeleteProductCommand(id))
+        deleteProductHandler.execute(DeleteCommand(id))
     }
 }

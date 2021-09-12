@@ -1,7 +1,7 @@
 package com.tul.shoppingcart.service.command.handler.impl
 
 import com.tul.shoppingcart.domain.exception.ObjectNotFoundException
-import com.tul.shoppingcart.infrastructure.ProductRepository
+import com.tul.shoppingcart.infrastructure.ItemRepository
 import com.tul.shoppingcart.service.command.DeleteCommand
 import io.mockk.*
 import io.mockk.impl.annotations.InjectMockKs
@@ -11,13 +11,13 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.util.*
 
-internal class DeleteProductServiceImplTest {
+internal class DeleteItemServiceImplTest {
 
     @InjectMockKs
-    private lateinit var deleteProductServiceUnderTest: DeleteProductHandlerImpl
+    private lateinit var deleteProductServiceUnderTest: DeleteItemHandlerImpl
 
     @MockK
-    private lateinit var productRepositoryMock: ProductRepository
+    private lateinit var itemRepository: ItemRepository
 
     init {
         MockKAnnotations.init(this)
@@ -26,45 +26,45 @@ internal class DeleteProductServiceImplTest {
     @BeforeEach
     fun initialize() {
         clearMocks(
-                productRepositoryMock,
+                itemRepository,
         )
     }
 
     @Test
-    fun `should delete a product when it exist in the DB`() {
+    fun `should delete a item when it exist in the DB`() {
         val id = UUID.randomUUID()
         val deleteProductCommand = DeleteCommand(
                 id = id
         )
-        every { productRepositoryMock.existsById(eq(id)) } returns true
-        justRun { productRepositoryMock.deleteById(eq(id)) }
+        every { itemRepository.existsById(eq(id)) } returns true
+        justRun { itemRepository.deleteById(eq(id)) }
 
         deleteProductServiceUnderTest.execute(deleteProductCommand)
 
         verify(exactly = 1) {
-            productRepositoryMock.existsById(any())
-            productRepositoryMock.deleteById(any())
+            itemRepository.existsById(any())
+            itemRepository.deleteById(any())
         }
     }
 
     @Test
-    fun `should not delete a product when it does not exist in the DB`() {
+    fun `should not delete a item when it does not exist in the DB`() {
         val id = UUID.randomUUID()
         val deleteCommand = DeleteCommand(
                 id = id
         )
-        every { productRepositoryMock.existsById(eq(id)) } returns false
+        every { itemRepository.existsById(eq(id)) } returns false
 
         assertThrows<ObjectNotFoundException> {
             deleteProductServiceUnderTest.execute(deleteCommand)
         }
 
         verify(exactly = 1) {
-            productRepositoryMock.existsById(any())
+            itemRepository.existsById(any())
         }
 
         verify(exactly = 0) {
-            productRepositoryMock.deleteById(any())
+            itemRepository.deleteById(any())
         }
     }
 }

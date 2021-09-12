@@ -1,7 +1,7 @@
 package com.tul.shoppingcart.domain.entity
 
-import com.tul.shoppingcart.domain.entity.Type.DISCOUNT
-import com.tul.shoppingcart.domain.entity.Type.SIMPLE
+import com.tul.shoppingcart.domain.entity.TypeProduct.DISCOUNT
+import com.tul.shoppingcart.domain.entity.TypeProduct.SIMPLE
 import com.tul.shoppingcart.domain.entity.valueObject.Money
 import com.tul.shoppingcart.domain.entity.valueObject.MoneyFactory
 import com.tul.shoppingcart.domain.entity.valueObject.Sku
@@ -10,13 +10,13 @@ import java.math.BigDecimal
 import java.util.*
 
 data class Product(
-        val id: UUID = UUID.randomUUID(),
+        override val id: UUID = UUID.randomUUID(),
         var name: String,
         var description: String?,
         var price: Money,
         var sku: Sku,
-        var type: Type,
-) {
+        var typeProduct: TypeProduct,
+) : EntityId {
     fun changeName(name: String) {
         this.name = name
     }
@@ -34,22 +34,22 @@ data class Product(
     }
 
     private fun makeSimple() {
-        this.type = SIMPLE
+        this.typeProduct = SIMPLE
     }
 
-    fun changeType(type: Type) {
-        when (type) {
+    fun changeType(typeProduct: TypeProduct) {
+        when (typeProduct) {
             SIMPLE -> makeSimple()
             DISCOUNT -> makeDiscount()
         }
     }
 
     private fun makeDiscount() {
-        this.type = DISCOUNT
+        this.typeProduct = DISCOUNT
     }
 }
 
-enum class Type {
+enum class TypeProduct {
     SIMPLE, DISCOUNT
 }
 
@@ -59,29 +59,25 @@ object ProductFactory {
             description: String?,
             price: Money,
             sku: Sku
-    ): Product {
-        return Product(
-                id = UUID.randomUUID(),
-                name = name,
-                description = description,
-                price = price,
-                sku = sku,
-                type = SIMPLE
-        )
-    }
+    ) = Product(
+            id = UUID.randomUUID(),
+            name = name,
+            description = description,
+            price = price,
+            sku = sku,
+            typeProduct = SIMPLE
+    )
 
     fun createDiscountedProduct(
             name: String,
             description: String?,
             price: Money,
             sku: Sku
-    ): Product {
-        return Product(
-                name = name,
-                description = description,
-                price = price,
-                sku = sku,
-                type = DISCOUNT
-        )
-    }
+    ) = Product(
+            name = name,
+            description = description,
+            price = price,
+            sku = sku,
+            typeProduct = DISCOUNT
+    )
 }

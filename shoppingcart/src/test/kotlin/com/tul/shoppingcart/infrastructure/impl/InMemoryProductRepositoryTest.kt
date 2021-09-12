@@ -1,83 +1,61 @@
 package com.tul.shoppingcart.infrastructure.impl
 
-import com.tul.shoppingcart.domain.entity.ProductFactory
-import com.tul.shoppingcart.domain.entity.valueObject.MoneyFactory
-import com.tul.shoppingcart.domain.entity.valueObject.SkuFactory
-import io.mockk.MockKAnnotations
-import io.mockk.impl.annotations.InjectMockKs
+import com.tul.shoppingcart.domain.entity.EntityId
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import java.math.BigDecimal
+import java.util.*
 
-internal class InMemoryProductRepositoryTest {
+data class EntityTest(
+        override val id: UUID = UUID.randomUUID(),
+        var name: String
+) : EntityId
 
-    @InjectMockKs
-    private lateinit var inMemoryProductRepository: InMemoryProductRepository
+internal class InMemoryentityRepositoryTest {
 
-    init {
-        MockKAnnotations.init(this)
+    private lateinit var dataBase : MutableMap<UUID, EntityTest>
+
+    private lateinit var inMemoryRepository : InMemoryEntityIdRepository<EntityTest>
+
+    @BeforeEach
+    fun initialize() {
+        dataBase = mutableMapOf()
+        inMemoryRepository = object: InMemoryEntityIdRepository<EntityTest>(dataBase = dataBase){}
     }
 
     @Test
-    fun `should create a new Product`() {
-        val newProduct = inMemoryProductRepository.create(
-                ProductFactory.createSimpleProduct(
-                        name = "shoes",
-                        description = "shoes for mem",
-                        price = MoneyFactory.zero(),
-                        sku = SkuFactory.empty().addAttribute("sh", "shoes").addAttribute("me", "men")
-                )
-        )
-
-        assertEquals(newProduct, inMemoryProductRepository.findById(newProduct.id))
+    fun `should create a new entity`() {
+        val newEntity = inMemoryRepository.create(EntityTest(name = "name"))
+        assertEquals(newEntity, inMemoryRepository.findById(newEntity.id))
     }
 
     @Test
-    fun `should update a product when it exist in the DB`() {
-        val currentProduct = inMemoryProductRepository.create(
-                ProductFactory.createSimpleProduct(
-                        name = "shoes",
-                        description = "shoes for mem",
-                        price = MoneyFactory.zero(),
-                        sku = SkuFactory.empty()
-                )
-        )
-        currentProduct.sku = SkuFactory.empty().addAttribute("sh", "shoes").addAttribute("me", "men")
-        currentProduct.price = MoneyFactory.createDenomination(BigDecimal.TEN)
+    fun `should update a entity when it exist in the DB`() {
+        val entityTest = inMemoryRepository.create(EntityTest(name = "name"))
 
-        inMemoryProductRepository.update(currentProduct)
+        entityTest.name = "another name"
 
-        assertEquals(currentProduct, inMemoryProductRepository.findById(currentProduct.id))
+        inMemoryRepository.update(entityTest)
+
+        assertEquals(entityTest, inMemoryRepository.findById(entityTest.id))
     }
 
     @Test
-    fun `should not update a product when it does not exist in the DB`() {
-        val currentProduct = ProductFactory.createSimpleProduct(
-                name = "shoes",
-                description = "shoes for mem",
-                price = MoneyFactory.zero(),
-                sku = SkuFactory.empty().addAttribute("sh", "shoes").addAttribute("me", "men")
-        )
+    fun `should not update a entity when it does not exist in the DB`() {
+        val entityTest = EntityTest(name = "name")
 
-        inMemoryProductRepository.update(currentProduct)
+        inMemoryRepository.update(entityTest)
 
-        assertNull(inMemoryProductRepository.findById(currentProduct.id))
+        assertNull(inMemoryRepository.findById(entityTest.id))
     }
 
     @Test
-    fun `should delete a product when it exist in the DB`() {
-        val id = inMemoryProductRepository.create(
-                ProductFactory.createSimpleProduct(
-                        name = "shoes",
-                        description = "shoes for mem",
-                        price = MoneyFactory.zero(),
-                        sku = SkuFactory.empty().addAttribute("sh", "shoes").addAttribute("me", "men")
-                )
-        ).id
+    fun `should delete a entity when it exist in the DB`() {
+        val id = inMemoryRepository.create(EntityTest(name = "name")).id
 
-        inMemoryProductRepository.deleteById(id)
+        inMemoryRepository.deleteById(id)
 
-        assertNull(inMemoryProductRepository.findById(id))
+        assertNull(inMemoryRepository.findById(id))
     }
 }

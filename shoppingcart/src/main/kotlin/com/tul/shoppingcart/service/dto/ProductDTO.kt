@@ -1,6 +1,6 @@
 package com.tul.shoppingcart.service.dto
 
-import com.tul.shoppingcart.domain.entity.Type
+import com.tul.shoppingcart.domain.entity.TypeProduct
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 import java.util.*
@@ -17,5 +17,5 @@ data class ProductDTO(
 
         @ApiModelProperty(example = "sho-44--bla-men")
         val sku: String,
-        val type: Type,
+        val typeProduct: TypeProduct,
 )

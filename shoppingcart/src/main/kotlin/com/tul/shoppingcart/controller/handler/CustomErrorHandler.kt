@@ -1,5 +1,6 @@
 package com.tul.shoppingcart.controller.handler
 
+import com.tul.shoppingcart.domain.exception.ObjectAlreadyExistsException
 import com.tul.shoppingcart.domain.exception.ObjectNotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -39,6 +40,20 @@ class CustomErrorHandler {
                 description = exception.message
         )
         return ResponseEntity(customError, HttpStatus.NOT_FOUND)
+    }
+
+    @ExceptionHandler(ObjectAlreadyExistsException::class)
+    fun handleObjectAlreadyExistsException(
+            exception: ObjectAlreadyExistsException,
+            webRequest: ServletWebRequest
+    ): ResponseEntity<CustomError> {
+        val customError = CustomError(
+                code = HttpStatus.CONFLICT.value(),
+                date = Instant.now(),
+                message = exception.code,
+                description = exception.message
+        )
+        return ResponseEntity(customError, HttpStatus.CONFLICT)
     }
 
 }

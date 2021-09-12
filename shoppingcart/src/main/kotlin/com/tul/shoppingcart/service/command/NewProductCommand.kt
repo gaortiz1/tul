@@ -1,6 +1,6 @@
 package com.tul.shoppingcart.service.command
 
-import com.tul.shoppingcart.domain.entity.Type
+import com.tul.shoppingcart.domain.entity.TypeProduct
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 import java.math.BigDecimal
@@ -30,5 +30,5 @@ data class NewProductCommand(
         val sku: Map<@NotBlank String, @NotBlank String>,
 
         @field:NotNull(message = "Type cannot be null")
-        val type: Type
+        val typeProduct: TypeProduct
 ) : Command

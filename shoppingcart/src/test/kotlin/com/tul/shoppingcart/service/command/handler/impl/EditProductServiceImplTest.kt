@@ -1,9 +1,6 @@
 package com.tul.shoppingcart.service.command.handler.impl
 
-import com.tul.shoppingcart.domain.entity.ProductFactory
-import com.tul.shoppingcart.domain.entity.Type.SIMPLE
-import com.tul.shoppingcart.domain.entity.valueObject.MoneyFactory
-import com.tul.shoppingcart.domain.entity.valueObject.SkuFactory
+import com.tul.shoppingcart.domain.entity.TypeProduct.SIMPLE
 import com.tul.shoppingcart.domain.exception.ObjectNotFoundException
 import com.tul.shoppingcart.infrastructure.ProductRepository
 import com.tul.shoppingcart.service.command.EditProductWithIdCommand
@@ -50,22 +47,9 @@ internal class EditProductServiceImplTest {
                 SIMPLE
         )
 
-        val currentDiscountedProduct = ProductFactory.createDiscountedProduct(
-                name = "shoe",
-                description = "description",
-                price = MoneyFactory.createDenomination(BigDecimal.ONE),
-                sku = SkuFactory.createFrom(
-                        mapOf(
-                                "sh" to "shoes",
-                                "m" to "men",
-                                "01" to "purple",
-                                "size" to "44"
-                        )
-                ),
-        )
         every {
             productRepositoryMock.findById(eq(id))
-        } returns currentDiscountedProduct
+        } returns shoesProductDiscount
 
         every {
             productRepositoryMock.update(
@@ -73,10 +57,10 @@ internal class EditProductServiceImplTest {
                         it.name == "new shoes"
                         it.description == "new description of shoes"
                         it.price.denomination == BigDecimal.TEN
-                        it.type == SIMPLE
+                        it.typeProduct == SIMPLE
                     }
             )
-        } returns currentDiscountedProduct
+        } returns shoesProductDiscount
 
         editProductServiceUnderTest.execute(editProductWithIdCommand)
 

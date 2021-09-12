@@ -1,9 +1,6 @@
 package com.tul.shoppingcart.service.command.handler.impl
 
-import com.tul.shoppingcart.domain.entity.ProductFactory
-import com.tul.shoppingcart.domain.entity.Type.SIMPLE
-import com.tul.shoppingcart.domain.entity.valueObject.MoneyFactory
-import com.tul.shoppingcart.domain.entity.valueObject.SkuFactory
+import com.tul.shoppingcart.domain.entity.TypeProduct.SIMPLE
 import com.tul.shoppingcart.infrastructure.ProductRepository
 import com.tul.shoppingcart.service.command.NewProductCommand
 import io.mockk.MockKAnnotations
@@ -49,7 +46,7 @@ internal class AddProductServiceImplTest {
                 description = "shoes for mem",
                 price = BigDecimal.ONE,
                 sku = skuAttributes,
-                type = SIMPLE
+                typeProduct = SIMPLE
         )
 
         every {
@@ -59,15 +56,10 @@ internal class AddProductServiceImplTest {
                         it.description == "shoes for mem"
                         it.price.denomination == BigDecimal.ONE
 
-                        it.type == SIMPLE
+                        it.typeProduct == SIMPLE
                     }
             )
-        } returns ProductFactory.createSimpleProduct(
-                name = "shoes",
-                description = "shoes for mem",
-                price = MoneyFactory.zero(),
-                sku = SkuFactory.createFrom(skuAttributes)
-        )
+        } returns shoesProductSimple
 
         addProductServiceImplUnderTest.execute(newProductCommand)
 

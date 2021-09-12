@@ -1,8 +1,8 @@
 package com.tul.shoppingcart.service.command.handler.impl
 
 import com.tul.shoppingcart.domain.entity.ProductFactory
-import com.tul.shoppingcart.domain.entity.Type.DISCOUNT
-import com.tul.shoppingcart.domain.entity.Type.SIMPLE
+import com.tul.shoppingcart.domain.entity.TypeProduct.DISCOUNT
+import com.tul.shoppingcart.domain.entity.TypeProduct.SIMPLE
 import com.tul.shoppingcart.domain.entity.valueObject.MoneyFactory
 import com.tul.shoppingcart.domain.entity.valueObject.SkuFactory
 import com.tul.shoppingcart.infrastructure.ProductRepository
@@ -13,6 +13,7 @@ import com.tul.shoppingcart.service.dto.mapper.toDto
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+import javax.validation.Valid
 
 @Service
 class AddProductHandlerImpl(
@@ -23,21 +24,21 @@ class AddProductHandlerImpl(
         private val LOGGER: Logger = LoggerFactory.getLogger(AddProductHandlerImpl::class.java)
     }
 
-    override fun execute(command: NewProductCommand): ProductDTO {
-        LOGGER.debug("adding product {}", command)
+    override fun execute(@Valid newProductCommand: NewProductCommand): ProductDTO {
+        LOGGER.debug("adding product {}", newProductCommand)
 
-        val newProduct = when (command.type) {
+        val newProduct = when (newProductCommand.typeProduct) {
             SIMPLE -> ProductFactory.createSimpleProduct(
-                    name = command.name,
-                    description = command.description,
-                    price = MoneyFactory.createDenomination(command.price),
-                    sku = SkuFactory.createFrom(command.sku),
+                    name = newProductCommand.name,
+                    description = newProductCommand.description,
+                    price = MoneyFactory.createDenomination(newProductCommand.price),
+                    sku = SkuFactory.createFrom(newProductCommand.sku),
             )
             DISCOUNT -> ProductFactory.createDiscountedProduct(
-                    name = command.name,
-                    description = command.description,
-                    price = MoneyFactory.createDenomination(command.price),
-                    sku = SkuFactory.createFrom(command.sku),
+                    name = newProductCommand.name,
+                    description = newProductCommand.description,
+                    price = MoneyFactory.createDenomination(newProductCommand.price),
+                    sku = SkuFactory.createFrom(newProductCommand.sku),
             )
         }
 
