@@ -1,12 +1,14 @@
 package com.tul.shoppingcart.application.command.handler.impl
 
+import com.tul.shoppingcart.application.command.NewItemCommandWithShoppingCartId
+import com.tul.shoppingcart.data.shoesProductDiscount
 import com.tul.shoppingcart.domain.entity.ItemFactory
-import com.tul.shoppingcart.domain.exception.ObjectAlreadyExistsException
+import com.tul.shoppingcart.domain.entity.ShoppingCartFactory
 import com.tul.shoppingcart.domain.exception.ObjectNotFoundException
+import com.tul.shoppingcart.domain.exception.ObjectValidationException
 import com.tul.shoppingcart.infrastructure.ItemRepository
 import com.tul.shoppingcart.infrastructure.ProductRepository
-import com.tul.shoppingcart.application.command.NewItemCommand
-import com.tul.shoppingcart.data.shoesProductDiscount
+import com.tul.shoppingcart.infrastructure.ShoppingCartRepository
 import io.mockk.MockKAnnotations
 import io.mockk.clearMocks
 import io.mockk.every
@@ -30,6 +32,9 @@ internal class AddItemHandlerImplTest {
     @MockK
     private lateinit var itemRepositoryMock: ItemRepository
 
+    @MockK
+    private lateinit var shoppingCartRepositoryMock: ShoppingCartRepository
+
     init {
         MockKAnnotations.init(this)
     }
@@ -38,27 +43,34 @@ internal class AddItemHandlerImplTest {
     fun initialize() {
         clearMocks(
                 productRepositoryMock,
-                itemRepositoryMock
+                itemRepositoryMock,
+                shoppingCartRepositoryMock
         )
     }
 
     @Test
     fun `should create a new item`() {
         val productId = UUID.randomUUID()
-        val newItemCommand = NewItemCommand(
+        val shoppingCartId = UUID.randomUUID()
+        val newItemCommand = NewItemCommandWithShoppingCartId(
                 productId = productId,
+                shoppingCartId = shoppingCartId,
                 quantity = 10
         )
 
         every { productRepositoryMock.findById(eq(productId)) } returns shoesProductDiscount.copy()
         every { itemRepositoryMock.existsItemByProductId(eq(productId)) } returns false
+        every { shoppingCartRepositoryMock.findById(eq(shoppingCartId)) } returns ShoppingCartFactory.createOnWaiting()
         every {
-            itemRepositoryMock.create(match {
-                it.product != null
-                it.quantity == BigInteger.TEN
-            })
+            itemRepositoryMock.create(
+                    match {
+                        it.product != null
+                        it.quantity == BigInteger.TEN
+                    }
+            )
         } returns ItemFactory.createItem(
                 product = shoesProductDiscount.copy(),
+                shoppingCart = ShoppingCartFactory.createOnWaiting(),
                 quantity = 10
         )
 
@@ -74,8 +86,10 @@ internal class AddItemHandlerImplTest {
     @Test
     fun `should not create a new item when a product does not exits`() {
         val productId = UUID.randomUUID()
-        val newItemCommand = NewItemCommand(
+        val shoppingCartId = UUID.randomUUID()
+        val newItemCommand = NewItemCommandWithShoppingCartId(
                 productId = productId,
+                shoppingCartId = shoppingCartId,
                 quantity = 10
         )
         every { productRepositoryMock.findById(eq(productId)) } returns null
@@ -92,17 +106,46 @@ internal class AddItemHandlerImplTest {
     }
 
     @Test
+    fun `should not create a new item when a shopping cart does not exits`() {
+        val productId = UUID.randomUUID()
+        val shoppingCartId = UUID.randomUUID()
+        val newItemCommand = NewItemCommandWithShoppingCartId(
+                productId = productId,
+                shoppingCartId = shoppingCartId,
+                quantity = 10
+        )
+        every { productRepositoryMock.findById(eq(productId)) } returns shoesProductDiscount.copy()
+        every { shoppingCartRepositoryMock.findById(eq(shoppingCartId)) } returns null
+
+        assertThrows<ObjectNotFoundException> {
+            addItemHandlerImplUnderTest.execute(newItemCommand)
+        }
+
+        verify(exactly = 0) {
+            itemRepositoryMock.create(any())
+            itemRepositoryMock.findById(any())
+        }
+        verify(exactly = 1) {
+            productRepositoryMock.findById(any())
+            shoppingCartRepositoryMock.findById(any())
+        }
+    }
+
+    @Test
     fun `should not create a new item when item already save`() {
         val productId = UUID.randomUUID()
-        val newItemCommand = NewItemCommand(
+        val shoppingCartId = UUID.randomUUID()
+        val newItemCommand = NewItemCommandWithShoppingCartId(
                 productId = productId,
+                shoppingCartId = shoppingCartId,
                 quantity = 10
         )
 
         every { productRepositoryMock.findById(eq(productId)) } returns shoesProductDiscount.copy()
+        every { shoppingCartRepositoryMock.findById(eq(shoppingCartId)) } returns ShoppingCartFactory.createOnWaiting()
         every { itemRepositoryMock.existsItemByProductId(eq(productId)) } returns true
 
-        assertThrows<ObjectAlreadyExistsException> {
+        assertThrows<ObjectValidationException> {
             addItemHandlerImplUnderTest.execute(newItemCommand)
         }
 

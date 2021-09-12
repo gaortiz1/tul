@@ -18,5 +18,5 @@ fun Item.toDto(): ItemDTO = ItemDTO(
         id =  this.id,
         productDTO = this.product.toDto(),
         quantity = this.quantity.longValueExact(),
-        price = this.price().getValue()
+        totalprice = this.totalPrice().getValue()
 )

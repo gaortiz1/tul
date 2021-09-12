@@ -8,9 +8,8 @@ import javax.validation.constraints.NotNull
 
 @ApiModel(value = "EditItem")
 data class EditItemCommand(
-        @field:NotNull
         @field:Min(1, message = "quantity must be greater than 0")
-        val quantity: Long,
+        val quantity: Long
 ) : Command
 
 data class EditItemCommandWithIdCommand(

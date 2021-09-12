@@ -16,10 +16,11 @@ internal class ItemTest {
                 product = shoesProductSimple.copy(
                         price = MoneyFactory.createDenomination(BigDecimal.TEN)
                 ),
+                shoppingCart = ShoppingCartFactory.createOnWaiting(),
                 quantity = 5
         )
 
-        assertEquals(BigDecimal.valueOf(50), item.price().denomination)
+        assertEquals(BigDecimal.valueOf(50), item.totalPrice().denomination)
     }
 
     @Test
@@ -28,6 +29,7 @@ internal class ItemTest {
                 product = shoesProductSimple.copy(
                         price = MoneyFactory.createDenomination(BigDecimal.TEN)
                 ),
+                shoppingCart = ShoppingCartFactory.createOnWaiting(),
                 quantity = 5
         )
 
@@ -37,6 +39,6 @@ internal class ItemTest {
 
         item.applyDiscount(fiftyPercentDiscount)
 
-        assertEquals(BigDecimal.valueOf(25), item.price().denomination)
+        assertEquals(BigDecimal.valueOf(25), item.totalPrice().denomination)
     }
 }

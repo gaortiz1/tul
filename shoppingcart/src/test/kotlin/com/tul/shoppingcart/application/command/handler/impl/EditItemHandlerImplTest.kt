@@ -5,6 +5,7 @@ import com.tul.shoppingcart.domain.exception.ObjectNotFoundException
 import com.tul.shoppingcart.infrastructure.ItemRepository
 import com.tul.shoppingcart.application.command.EditItemCommandWithIdCommand
 import com.tul.shoppingcart.data.shoesProductDiscount
+import com.tul.shoppingcart.domain.entity.ShoppingCartFactory
 import io.mockk.MockKAnnotations
 import io.mockk.clearMocks
 import io.mockk.every
@@ -46,6 +47,7 @@ internal class EditItemHandlerImplTest {
 
         every { itemRepositoryMock.findById(any()) } returns ItemFactory.createItem(
                 product = shoesProductDiscount.copy(),
+                shoppingCart = ShoppingCartFactory.createOnWaiting(),
                 quantity = 10
         )
         every {
@@ -54,6 +56,7 @@ internal class EditItemHandlerImplTest {
             })
         } returns ItemFactory.createItem(
                 product = shoesProductDiscount.copy(),
+                shoppingCart = ShoppingCartFactory.createOnWaiting(),
                 quantity = 1
         )
 

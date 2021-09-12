@@ -4,7 +4,7 @@ import com.tul.shoppingcart.application.command.*
 import com.tul.shoppingcart.application.dto.ItemDTO
 import com.tul.shoppingcart.application.dto.ProductDTO
 
-interface AddItemHandler : CommandService<NewItemCommand, ItemDTO>
+interface AddItemHandler : CommandService<NewItemCommandWithShoppingCartId, ItemDTO>
 
 interface AddProductHandler : CommandService<NewProductCommand, ProductDTO>
 

@@ -6,6 +6,6 @@ data class ItemDTO(
         val id: UUID,
         val productDTO: ProductDTO,
         val quantity: Long,
-        val price: String
+        val totalprice: String
 ) {
 }

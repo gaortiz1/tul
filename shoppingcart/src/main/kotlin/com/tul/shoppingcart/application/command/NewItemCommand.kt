@@ -12,5 +12,29 @@ data class NewItemCommand(
         val productId: UUID,
 
         @field:Min(1, message = "quantity must be greater than 0")
-        var quantity: Long,
+        val quantity: Long,
 ) : Command
+
+@ApiModel(value = "NewItem")
+data class NewItemCommandWithShoppingCartId(
+        @field:NotNull(message = "Shopping cart cannot be null")
+        val shoppingCartId: UUID,
+        private val newItemCommand: NewItemCommand,
+) : Command {
+
+        constructor(
+                shoppingCartId: UUID,
+                productId: UUID,
+                quantity: Long,
+        ) : this(
+                shoppingCartId = shoppingCartId,
+                newItemCommand = NewItemCommand(
+                        productId = productId,
+                        quantity = quantity
+                )
+        )
+
+        val productId: UUID by newItemCommand::productId
+        val quantity: Long by newItemCommand::quantity
+
+}
