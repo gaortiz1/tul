@@ -10,6 +10,11 @@ data class ShoppingCart(
 ) : EntityId {
 
     fun isCompleted(): Boolean = status == COMPLETED
+
+    fun completed(): ShoppingCart {
+        status = COMPLETED
+        return this
+    }
 }
 
 enum class ShoppingCartStatus {
@@ -19,6 +24,10 @@ enum class ShoppingCartStatus {
 object ShoppingCartFactory {
     fun createOnWaiting() = ShoppingCart(
             status = WAIT
+    )
+
+    fun createCompleted() = ShoppingCart(
+            status = COMPLETED
     )
 
     fun createOnWaitingWithId(id: UUID) = ShoppingCart(

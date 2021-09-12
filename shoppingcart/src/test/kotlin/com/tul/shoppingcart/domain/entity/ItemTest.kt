@@ -6,6 +6,7 @@ import com.tul.shoppingcart.domain.entity.valueObject.MoneyFactory
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
+import java.util.*
 
 internal class ItemTest {
 
@@ -16,7 +17,7 @@ internal class ItemTest {
                 product = shoesProductSimple.copy(
                         price = MoneyFactory.createDenomination(BigDecimal.TEN)
                 ),
-                shoppingCart = ShoppingCartFactory.createOnWaiting(),
+                shoppingCartId = UUID.randomUUID(),
                 quantity = 5
         )
 
@@ -29,7 +30,7 @@ internal class ItemTest {
                 product = shoesProductSimple.copy(
                         price = MoneyFactory.createDenomination(BigDecimal.TEN)
                 ),
-                shoppingCart = ShoppingCartFactory.createOnWaiting(),
+                shoppingCartId = UUID.randomUUID(),
                 quantity = 5
         )
 

@@ -65,12 +65,13 @@ internal class AddItemHandlerImplTest {
             itemRepositoryMock.create(
                     match {
                         it.product != null
+                        it.shoppingCartId == shoppingCartId
                         it.quantity == BigInteger.TEN
                     }
             )
         } returns ItemFactory.createItem(
                 product = shoesProductDiscount.copy(),
-                shoppingCart = ShoppingCartFactory.createOnWaiting(),
+                shoppingCartId = shoppingCartId,
                 quantity = 10
         )
 
@@ -152,6 +153,31 @@ internal class AddItemHandlerImplTest {
         verify(exactly = 0) { itemRepositoryMock.create(any()) }
         verify(exactly = 1) {
             itemRepositoryMock.existsItemByProductId(any())
+        }
+    }
+
+    @Test
+    fun `should not create a new item when shopping cart is completed`() {
+        val productId = UUID.randomUUID()
+        val shoppingCartId = UUID.randomUUID()
+        val newItemCommand = NewItemCommand(
+                productId = productId,
+                shoppingCartId = shoppingCartId,
+                quantity = 10
+        )
+
+        every { productRepositoryMock.findById(eq(productId)) } returns shoesProductDiscount.copy()
+        every { shoppingCartRepositoryMock.findById(eq(shoppingCartId)) } returns ShoppingCartFactory.createCompleted()
+        every { itemRepositoryMock.existsItemByProductId(eq(productId)) } returns false
+
+        assertThrows<ObjectValidationException> {
+            addItemHandlerImplUnderTest.execute(newItemCommand)
+        }
+
+        verify(exactly = 0) { itemRepositoryMock.create(any()) }
+        verify(exactly = 1) {
+            itemRepositoryMock.existsItemByProductId(any())
+            shoppingCartRepositoryMock.findById(any())
         }
     }
 }

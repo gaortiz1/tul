@@ -9,7 +9,7 @@ import java.util.*
 data class Item(
         override val id: UUID = UUID.randomUUID(),
         val product: Product,
-        val shoppingCart: ShoppingCart,
+        val shoppingCartId: UUID,
         var quantity: BigInteger = BigInteger.ONE
 ) : EntityId {
 
@@ -32,21 +32,21 @@ object ItemFactory {
 
     fun createItem(
             product: Product,
-            shoppingCart: ShoppingCart,
+            shoppingCartId: UUID,
             quantity: BigInteger = BigInteger.ONE,
     ) = Item(
             product = product,
-            shoppingCart = shoppingCart,
+            shoppingCartId = shoppingCartId,
             quantity = quantity
     )
 
     fun createItem(
             product: Product,
-            shoppingCart: ShoppingCart,
+            shoppingCartId: UUID,
             quantity: Long = 1,
     ) = createItem(
             product = product,
-            shoppingCart = shoppingCart,
+            shoppingCartId = shoppingCartId,
             quantity = BigInteger.valueOf(quantity)
     )
 

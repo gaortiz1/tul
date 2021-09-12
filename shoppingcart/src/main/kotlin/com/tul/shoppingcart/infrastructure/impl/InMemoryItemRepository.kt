@@ -10,9 +10,9 @@ class InMemoryItemRepository(dataBase : MutableMap<UUID, Item>) : InMemoryEntity
             dataBase.filterValues { it.product.id == productId }.isNotEmpty()
 
     override fun findByShoppingCartId(shoppingCartId: UUID): List<Item> =
-            dataBase.filterValues { it.shoppingCart.id == shoppingCartId }.values.toList()
+            dataBase.filterValues { it.shoppingCartId == shoppingCartId }.values.toList()
 
     override fun findItemByShoppingCartIdAndItemId(shoppingCartId: UUID, itemId: UUID): Item? =
-            dataBase.filterValues { it.shoppingCart.id == shoppingCartId && it.id == itemId }.firstNotNullOfOrNull(Map.Entry<UUID, Item>::value)
+            dataBase.filterValues { it.shoppingCartId == shoppingCartId && it.id == itemId }.firstNotNullOfOrNull(Map.Entry<UUID, Item>::value)
 
 }

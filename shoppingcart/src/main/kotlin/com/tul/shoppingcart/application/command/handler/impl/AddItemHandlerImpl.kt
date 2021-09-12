@@ -45,7 +45,7 @@ class AddItemHandlerImpl(
 
         val item = ItemFactory.createItem(
                 product = product,
-                shoppingCart = shoppingCart,
+                shoppingCartId = newItem.shoppingCartId!!,
                 quantity = newItem.quantity,
         )
 
