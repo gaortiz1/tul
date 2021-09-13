@@ -61,7 +61,6 @@ Run the test cases execute
 
 The distribution of the packages are based on DDD following following a structure like:
 
-
 ├── application
 ├── config
 ├── domain
