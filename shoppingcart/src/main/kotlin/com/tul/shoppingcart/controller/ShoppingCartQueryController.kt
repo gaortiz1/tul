@@ -20,7 +20,7 @@ class ShoppingCartQueryController(
 ) {
 
     @GetMapping("/{id}/items/{itemId}")
-    @ApiOperation(value = "find by id", notes = "This method get a product by id")
+    @ApiOperation(value = "find item by shopping cart id and item id", notes = "This method get a item by shopping cart id and item id")
     fun findItemByShoppingCartIdAndItemId(
             @PathVariable("id")
             id: UUID,
@@ -29,6 +29,6 @@ class ShoppingCartQueryController(
     ): ItemDTO? = itemQueryHandler.findItemByShoppingCartIdAndItemId(id, itemId)
 
     @GetMapping("/{id}/items")
-    @ApiOperation(value = "find all", notes = "This method get al the products")
-    fun findAll(@PathVariable("id") id: UUID): List<ItemDTO> = itemQueryHandler.findByShoppingCartId(id)
+    @ApiOperation(value = "find all items", notes = "This method get all the items")
+    fun findAllItems(@PathVariable("id") id: UUID): List<ItemDTO> = itemQueryHandler.findByShoppingCartId(id)
 }

@@ -17,7 +17,7 @@ class AppStartupRunner(
     private val shoppingCartId = UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6")
 
     companion object {
-        val LOGGER: org.slf4j.Logger = LoggerFactory.getLogger(EditItemHandlerImpl::class.java)
+        val LOGGER: org.slf4j.Logger = LoggerFactory.getLogger(AppStartupRunner::class.java)
     }
 
     override fun run(args: ApplicationArguments) {

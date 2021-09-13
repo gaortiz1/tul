@@ -41,7 +41,7 @@ class ShoppingCartCommandController(
     )
 
     @PostMapping("{id}/checkout", produces = ["application/json"])
-    @ApiOperation(value = "check out shopping cart", notes = "This method check out a shopping cart")
+    @ApiOperation(value = "check out shopping cart", notes = "This method checks out a shopping cart")
     fun checkout(
             @PathVariable("id")
             id: UUID,
@@ -50,7 +50,7 @@ class ShoppingCartCommandController(
     )
 
     @PutMapping("/{id}/items/{itemId}", produces = ["application/json"], consumes = ["application/json"])
-    @ApiOperation(value = "edit new Item", notes = "This method edites a new item")
+    @ApiOperation(value = "edit new Item", notes = "This method edit a new item")
     fun editItem(
             @PathVariable("id")
             id: UUID,
