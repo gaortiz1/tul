@@ -5,6 +5,7 @@ Store devices and services for a customer and calculates monthly cost operations
 
 
 Swagger UI : http://localhost:8080/api/swagger-ui/index.html
+
 Api doc: http://localhost:8080/api/v2/api-docs?group=api
 ## Getting Started
 
