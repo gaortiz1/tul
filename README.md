@@ -35,7 +35,7 @@ Running locally
 ./gradlew bootRun
 ```
 
-**Note:** DB migrations will be run using Liquibase project and will be executed when the project start
+**Note:** a shopping cart has been created when starting the application in AppStartupRunner.kt with the UUID = 3fa85f64-5717-4562-b3fc-2c963f66afa6
 
 
 ## Running the test cases
