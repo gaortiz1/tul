@@ -3,7 +3,7 @@
 
 This sample application demonstrates a simple shopping cart.
 
-The shopping cart service offers the following REST endpoints::
+The shopping cart service offers the following REST endpoints:
 
 Swagger UI : http://localhost:8080/api/swagger-ui/index.html
 
