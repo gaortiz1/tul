@@ -70,6 +70,7 @@ The distribution of the packages are based on DDD following following a structur
 .
 ├── application
 ├── config
+├── controller
 ├── domain
 └── infrastructure
 ```
