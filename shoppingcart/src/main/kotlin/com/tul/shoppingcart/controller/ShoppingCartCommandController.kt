@@ -61,7 +61,7 @@ class ShoppingCartCommandController(
             @RequestBody
             editItemCommand: EditItemCommand,
     ): ResponseEntity<ItemDTO> =
-            ok(editItemHandler.execute(editItemCommand.withId(itemId)))
+            ok(editItemHandler.execute(editItemCommand.withId(itemId).withShoppingCartId(id)))
 
     @DeleteMapping("/{id}/items/{itemId}")
     fun deleteItem(@PathVariable("id") id: UUID,  @PathVariable("itemId") itemId: UUID) {

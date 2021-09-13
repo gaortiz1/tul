@@ -29,7 +29,7 @@ class EditItemHandlerImpl(
         val item = itemRepository.findById(editProductCommand.id!!)
                 ?: throw ObjectNotFoundException(code = "item_not_found", message = "Item not found with ${editProductCommand.id}")
 
-        val shoppingCart = shoppingCartRepository.findById(editProductCommand.shoppingCartId)
+        val shoppingCart = shoppingCartRepository.findById(editProductCommand.shoppingCartId!!)
                 ?: throw ObjectNotFoundException(code = "shopping_cart_not_found", message = "Shopping cart not found with ${editProductCommand.shoppingCartId}")
 
         if (shoppingCart.isCompleted()) {
