@@ -19,7 +19,7 @@ import javax.validation.Valid
 
 @RestController
 @Api(value = "product", description = "Endpoint for product management", tags = ["product"])
-@RequestMapping("products", produces = ["application/json"], consumes = ["application/json"])
+@RequestMapping("products")
 @ApiVersion("1")
 class ProductCommandController(
         val addProductService: AddProductHandler,
@@ -27,7 +27,7 @@ class ProductCommandController(
         val deleteProductHandler: DeleteProductHandler
 ) {
 
-    @PostMapping
+    @PostMapping(produces = ["application/json"], consumes = ["application/json"])
     @ApiOperation(value = "add new Product", notes = "This method creates a new product")
     fun addProduct(
             @ApiParam(name = "new Product", value = "Model")
@@ -36,7 +36,7 @@ class ProductCommandController(
             newProductCommand: NewProductCommand
     ): ResponseEntity<ProductDTO> = ok(addProductService.execute(newProductCommand))
 
-    @PutMapping("{id}")
+    @PutMapping("{id}", produces = ["application/json"], consumes = ["application/json"])
     fun editProduct(
             @ApiParam(name = "edit Product", value = "Model")
             @Valid

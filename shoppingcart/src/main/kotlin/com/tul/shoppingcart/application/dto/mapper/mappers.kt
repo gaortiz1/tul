@@ -4,6 +4,8 @@ import com.tul.shoppingcart.domain.entity.Item
 import com.tul.shoppingcart.domain.entity.Product
 import com.tul.shoppingcart.application.dto.ItemDTO
 import com.tul.shoppingcart.application.dto.ProductDTO
+import com.tul.shoppingcart.application.dto.ShoppingCartDTO
+import com.tul.shoppingcart.domain.entity.ShoppingCart
 
 fun Product.toDto(): ProductDTO = ProductDTO(
         id = this.id,
@@ -18,5 +20,12 @@ fun Item.toDto(): ItemDTO = ItemDTO(
         id =  this.id,
         productDTO = this.product.toDto(),
         quantity = this.quantity.longValueExact(),
-        totalprice = this.totalPrice().getValue()
+        totalPrice = this.totalPrice().getValue()
+)
+
+fun ShoppingCart.toDto() : ShoppingCartDTO = ShoppingCartDTO(
+        id = this.id,
+        status = this.status,
+        totalPrice = this.totalPrice.getValue(),
+        items = this.items.map(Item::toDto)
 )

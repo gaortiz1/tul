@@ -24,6 +24,11 @@ data class Money(
 
     fun divide(divisor: BigDecimal) : Money =
             divide(MoneyFactory.createDenomination(divisor))
+
+    fun add(augend: Money) : Money =
+            MoneyFactory.createDenomination(
+                    denomination.add(augend.denomination)
+            )
 }
 
 private val DEFAULT_CURRENCY = Currency.getInstance("USD")
