@@ -1,12 +1,17 @@
 # tul
 # Shopping Cart Services 
 
-Store devices and services for a customer and calculates monthly cost operations.
+This sample application demonstrates a simple shopping cart.
 
+The shopping cart service offers the following REST endpoints::
 
 Swagger UI : http://localhost:8080/api/swagger-ui/index.html
 
 Api doc: http://localhost:8080/api/v2/api-docs?group=api
+
+
+For simplicity, no authentication is implemented, shopping cart IDs are  UUIDs to ensure uniqueness
+
 ## Getting Started
 
 These instructions allow you to run a copy of the running project on your local machine for development and testing purposes.
