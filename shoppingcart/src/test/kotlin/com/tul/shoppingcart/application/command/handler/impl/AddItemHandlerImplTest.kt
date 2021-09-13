@@ -60,7 +60,7 @@ internal class AddItemHandlerImplTest {
 
         every { productRepositoryMock.findById(eq(productId)) } returns shoesProductDiscount.copy()
         every { itemRepositoryMock.existsItemByProductId(eq(productId)) } returns false
-        every { shoppingCartRepositoryMock.findById(eq(shoppingCartId)) } returns ShoppingCartFactory.createOnWaiting()
+        every { shoppingCartRepositoryMock.findById(eq(shoppingCartId)) } returns ShoppingCartFactory.createOnPending()
         every {
             itemRepositoryMock.create(
                     match {
@@ -143,7 +143,7 @@ internal class AddItemHandlerImplTest {
         )
 
         every { productRepositoryMock.findById(eq(productId)) } returns shoesProductDiscount.copy()
-        every { shoppingCartRepositoryMock.findById(eq(shoppingCartId)) } returns ShoppingCartFactory.createOnWaiting()
+        every { shoppingCartRepositoryMock.findById(eq(shoppingCartId)) } returns ShoppingCartFactory.createOnPending()
         every { itemRepositoryMock.existsItemByProductId(eq(productId)) } returns true
 
         assertThrows<ObjectValidationException> {

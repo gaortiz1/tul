@@ -50,7 +50,7 @@ internal class CheckoutShoppingCartImplTest {
                 id = shoppingCartId
         )
 
-        every { shoppingCartRepositoryMock.findById(eq(shoppingCartId)) } returns ShoppingCartFactory.createOnWaiting()
+        every { shoppingCartRepositoryMock.findById(eq(shoppingCartId)) } returns ShoppingCartFactory.createOnPending()
         every { itemRepositoryMock.findByShoppingCartId(eq(shoppingCartId)) } returns listOf(onesShoes, twoShoesWithDiscount)
         every {
             shoppingCartRepositoryMock.update(
@@ -117,7 +117,7 @@ internal class CheckoutShoppingCartImplTest {
                 id = shoppingCartId
         )
 
-        every { shoppingCartRepositoryMock.findById(eq(shoppingCartId)) } returns ShoppingCartFactory.createOnWaiting()
+        every { shoppingCartRepositoryMock.findById(eq(shoppingCartId)) } returns ShoppingCartFactory.createOnPending()
         every { itemRepositoryMock.findByShoppingCartId(eq(shoppingCartId)) } returns emptyList()
 
 

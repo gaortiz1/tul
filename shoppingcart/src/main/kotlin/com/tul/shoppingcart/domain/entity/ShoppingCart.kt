@@ -1,7 +1,7 @@
 package com.tul.shoppingcart.domain.entity
 
 import com.tul.shoppingcart.domain.entity.ShoppingCartStatus.COMPLETED
-import com.tul.shoppingcart.domain.entity.ShoppingCartStatus.WAIT
+import com.tul.shoppingcart.domain.entity.ShoppingCartStatus.PENDING
 import com.tul.shoppingcart.domain.entity.valueObject.Money
 import com.tul.shoppingcart.domain.entity.valueObject.MoneyFactory
 import java.util.*
@@ -27,20 +27,20 @@ data class ShoppingCart(
 }
 
 enum class ShoppingCartStatus {
-    WAIT, COMPLETED
+    PENDING, COMPLETED
 }
 
 object ShoppingCartFactory {
-    fun createOnWaiting() = ShoppingCart(
-            status = WAIT
+    fun createOnPending() = ShoppingCart(
+            status = PENDING
     )
 
     fun createCompleted() = ShoppingCart(
             status = COMPLETED
     )
 
-    fun createOnWaitingWithId(id: UUID) = ShoppingCart(
+    fun createOnPendingWithId(id: UUID) = ShoppingCart(
             id = id,
-            status = WAIT
+            status = PENDING
     )
 }

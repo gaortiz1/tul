@@ -52,7 +52,7 @@ internal class DeleteItemServiceImplTest {
                 shoppingCartId = shoppingCartId,
                 quantity = 10
         )
-        every { shoppingCartRepositoryMock.findById(eq(shoppingCartId)) } returns ShoppingCartFactory.createOnWaiting()
+        every { shoppingCartRepositoryMock.findById(eq(shoppingCartId)) } returns ShoppingCartFactory.createOnPending()
         justRun { itemRepositoryMock.deleteById(eq(id)) }
 
         deleteProductServiceUnderTest.execute(deleteProductCommand)

@@ -53,7 +53,7 @@ internal class EditItemHandlerImplTest {
                 shoppingCartId = shoppingCartId
         )
 
-        every { shoppingCartRepositoryMock.findById(eq(shoppingCartId)) } returns ShoppingCartFactory.createOnWaiting()
+        every { shoppingCartRepositoryMock.findById(eq(shoppingCartId)) } returns ShoppingCartFactory.createOnPending()
 
         every { itemRepositoryMock.findById(any()) } returns ItemFactory.createItem(
                 product = shoesProductDiscount.copy(),

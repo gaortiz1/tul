@@ -1,6 +1,5 @@
 package com.tul.shoppingcart.config
 
-import com.tul.shoppingcart.application.command.handler.impl.EditItemHandlerImpl
 import com.tul.shoppingcart.domain.entity.ShoppingCartFactory
 import com.tul.shoppingcart.infrastructure.ShoppingCartRepository
 import org.slf4j.LoggerFactory
@@ -22,6 +21,6 @@ class AppStartupRunner(
 
     override fun run(args: ApplicationArguments) {
         LOGGER.info("creating a new shopping car with id {}", shoppingCartId)
-        shoppingCartRepository.create(ShoppingCartFactory.createOnWaitingWithId(shoppingCartId))
+        shoppingCartRepository.create(ShoppingCartFactory.createOnPendingWithId(shoppingCartId))
     }
 }
