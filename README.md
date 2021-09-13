@@ -54,12 +54,25 @@ Run the test cases execute
 - Mockk
 - JUnit 5 Jupiter
 - Mockito
-- Gradle 7.1..
+- Gradle 7.1.x
 
 ## Architecture
 - DDD domain driven design
+
+The distribution of the packages are based on DDD following following a structure like:
+├── application
+├── config
+├── domain
+└── infrastructure
+
 - CQRS stands for Command Query Responsibility Segregation
+
+Within the application package they are divided into commands and queries as proposed by CQRS
+
+
 - Clean Architecture 
+
+Each service is divided into use cases as proposed clean Architecture
 
 ## Author
 
