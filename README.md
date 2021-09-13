@@ -66,6 +66,15 @@ The distribution of the packages are based on DDD following following a structur
  - domain
  - infrastructure
 
+``` bash
+.
+├── application
+├── config
+├── domain
+└── infrastructure
+```
+
+
 - CQRS stands for Command Query Responsibility Segregation
 
 Within the application package they are divided into commands and queries as proposed by CQRS
